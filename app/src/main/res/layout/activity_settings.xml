@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Bien changer le nom qui contient le fragment-->
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_settings"
+    android:name="cnns.com.example.tp_entrainement_ppp.SettingsFragment"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"/>

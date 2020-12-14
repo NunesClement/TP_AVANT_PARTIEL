@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -98,9 +99,12 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("####TEST START");
     }
 
+    @Override
     protected void onResume() {
+        SharedPreferences app_prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean pref_value = app_prefs.getBoolean(getString(R.string.clef_1), false);
+        System.out.println(pref_value + "CALLLLLL");
         super.onResume();
-        System.out.println("####TEST RESUME");
     }
 
     @Override
@@ -138,8 +142,8 @@ public class MainActivity extends AppCompatActivity {
 
         switch (itemId) {
             case R.id.menu_todo_2:
-//                Intent start_settings_activity = new Intent(this, SettingsActivity.class);
-//                startActivity(start_settings_activity);
+                Intent start_settings_activity = new Intent(this, SettingsActivity.class);
+                startActivity(start_settings_activity);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -208,8 +212,6 @@ public class MainActivity extends AppCompatActivity {
                 null, null, null, null, null);
 
         // TEST DE WHILE CLASSIQUE
-        System.out.println("AAAAAcursor " + cursor);
-
         int indexTitre = 0;
         int indexPriorite = 0;
         while (cursor.moveToNext()) {

@@ -3,4 +3,6 @@
     <string name="settings">Paramètres</string>
     <string name="libelle">Libellé : </string>
     <string name="search">RECHERCHE</string>
+    <string name="clef_1">clef_1</string>
+
 </resources>
