@@ -34,7 +34,7 @@ public class FakeData {
 
         cv = new ContentValues();
         cv.put(ListeAttenteContract.ListeAttenteEntry.TITLE_NAME, "Voiturette");
-        cv.put(ListeAttenteContract.ListeAttenteEntry.PRIORITY_NAME, "1");
+        cv.put(ListeAttenteContract.ListeAttenteEntry.PRIORITY_NAME, "6");
         list.add(cv);
 
         //insert all guests in one transaction
@@ -42,15 +42,16 @@ public class FakeData {
         {
             db.beginTransaction();
             //clear the table first
-            db.delete (ListeAttenteContract.ListeAttenteEntry.TITLE_NAME,null,null);
+//            db.delete (ListeAttenteContract.ListeAttenteEntry.TITLE_NAME,null,null);
             //go through the list and add one by one
             for(ContentValues c:list){
-                db.insert(ListeAttenteContract.ListeAttenteEntry.TITLE_NAME, null, c);
+                db.insert(ListeAttenteContract.ListeAttenteEntry.TABLE_NAME, null, c);
             }
             db.setTransactionSuccessful();
         }
         catch (SQLException e) {
             //too bad :(
+            System.out.println("ERREUR DE BASE " + e);
         }
         finally
         {

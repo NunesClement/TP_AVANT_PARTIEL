@@ -18,7 +18,7 @@
 
         <EditText
             android:id="@+id/editTask"
-            android:layout_width="213dp"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:text="" />
 

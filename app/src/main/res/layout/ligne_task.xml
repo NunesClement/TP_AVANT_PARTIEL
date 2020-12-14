@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="50dp"
+        android:textSize="25dp"
         android:minWidth="0.15dp"
         android:maxWidth="0.15dp"
         tools:text="Titre"
@@ -26,6 +26,5 @@
         android:layout_weight="0.15"
         android:minWidth="0.15dp"
         android:maxWidth="0.15dp"
-        android:textSize="25dp"
-        android:background="@color/teal_200" />
+        android:textSize="25dp"/>
 </LinearLayout>

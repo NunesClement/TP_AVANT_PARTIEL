@@ -19,8 +19,8 @@ public class ListeAttenteDbHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
     public void onCreate(SQLiteDatabase db) {
-
         db.execSQL(SQL_CREATE_ENTRIES);
+        FakeData.insert_fake_data(db);
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 // Constante String SQL_DELETE_ENTRIES à définir ..

@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void feedRecyclerAvecBase(){
         ListeAttenteDbHelper mDbHelper = new ListeAttenteDbHelper(this);
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         String[] projection = {
                 BaseColumns._ID,
@@ -160,8 +160,9 @@ public class MainActivity extends AppCompatActivity {
         int indexTitre = 0;
         int indexPriorite = 0;
         while(cursor.moveToNext()) {
+            System.out.println("A2 " + cursor);
             indexTitre = cursor.getColumnIndexOrThrow("titre");
-            indexPriorite = cursor.getColumnIndexOrThrow("val");
+            indexPriorite = cursor.getColumnIndexOrThrow("priorite");
             String titre = cursor.getString(indexTitre);
             String priorite = cursor.getString(indexPriorite);
             System.out.println("AAAAA" + titre + priorite);
