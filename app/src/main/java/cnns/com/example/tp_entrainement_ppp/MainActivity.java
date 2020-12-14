@@ -18,7 +18,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,12 +32,15 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     static final int ADD_TASK_ID = 1;
-    //private ListView lvTask;
+    private Button btnAddTask;
+    private EditText searchBarCadeau;
+
     private RecyclerView rvTask;
     private TaskAdapter taskAdapter;
 
     static final String TUPLE_RECYCLER = "TUPLE";
     private ArrayList<TaskAdapter.TaskItem> itemList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("####TEST CREATE");
@@ -61,12 +67,21 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                        int position = (int)viewHolder.itemView.getTag();
+                        int position = (int) viewHolder.itemView.getTag();
                         taskAdapter.supprime(position);
                     }
 
                 };
         new ItemTouchHelper(item_touch_helper_callback).attachToRecyclerView(rvTask);
+        btnAddTask = (Button) findViewById(R.id.validateBtn);
+        btnAddTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchBarCadeau = (EditText) findViewById(R.id.search_cadeau);
+                searchIntoRecycler(searchBarCadeau.getText().toString());
+                //System.out.println("A cliqué !!" + searchBarCadeau.getText().toString());
+            }
+        });
     }
 
     @Override
@@ -77,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("####TEST SAVE");
 
     }
+
     protected void onStart() {
         super.onStart();
         System.out.println("####TEST START");
@@ -120,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
 
-        switch(itemId){
+        switch (itemId) {
             case R.id.menu_todo_2:
 //                Intent start_settings_activity = new Intent(this, SettingsActivity.class);
 //                startActivity(start_settings_activity);
@@ -128,7 +144,8 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void feedRecyclerAvecBase(){
+
+    public void feedRecyclerAvecBase() {
         ListeAttenteDbHelper mDbHelper = new ListeAttenteDbHelper(this);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
@@ -159,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
 
         int indexTitre = 0;
         int indexPriorite = 0;
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             System.out.println("A2 " + cursor);
             indexTitre = cursor.getColumnIndexOrThrow("titre");
             indexPriorite = cursor.getColumnIndexOrThrow("priorite");
@@ -171,12 +188,39 @@ public class MainActivity extends AppCompatActivity {
         cursor.close();
     }
 
-    // SI ON VEUT DETRUIRE LA BDD A LA FIN
-//    @Override
-//    protected void onDestroy() {
-//        ListeAttenteDbHelper mDbHelper = new ListeAttenteDbHelper(this);
-//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-//        db.close();
-//        super.onDestroy();
-//    }
+    public void searchIntoRecycler(String titleSearched) {
+        taskAdapter.supprimeToutVisuellement();
+        ListeAttenteDbHelper mDbHelper = new ListeAttenteDbHelper(this);
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        String[] projection = {
+                BaseColumns._ID,
+                ListeAttenteContract.ListeAttenteEntry.TITLE_NAME,
+                ListeAttenteContract.ListeAttenteEntry.PRIORITY_NAME
+
+        };
+        String selection = ListeAttenteContract.ListeAttenteEntry.TITLE_NAME;
+
+        Cursor cursor = db.query(
+                ListeAttenteContract.ListeAttenteEntry.TABLE_NAME,
+                new String[] { ListeAttenteContract.ListeAttenteEntry.TITLE_NAME, ListeAttenteContract.ListeAttenteEntry.PRIORITY_NAME  },
+                ListeAttenteContract.ListeAttenteEntry.TITLE_NAME + " LIKE '%" + titleSearched + "%'",
+                null, null, null, null, null);
+
+        // TEST DE WHILE CLASSIQUE
+        System.out.println("AAAAAcursor " + cursor);
+
+        int indexTitre = 0;
+        int indexPriorite = 0;
+        while (cursor.moveToNext()) {
+            System.out.println("A2 " + cursor);
+            indexTitre = cursor.getColumnIndexOrThrow("titre");
+            indexPriorite = cursor.getColumnIndexOrThrow("priorite");
+            String titre = cursor.getString(indexTitre);
+            String priorite = cursor.getString(indexPriorite);
+            System.out.println("Titre fetché en base" + titre + " " + priorite);
+            taskAdapter.ajoute(titre, priorite);
+        }
+        cursor.close();
+    }
 }

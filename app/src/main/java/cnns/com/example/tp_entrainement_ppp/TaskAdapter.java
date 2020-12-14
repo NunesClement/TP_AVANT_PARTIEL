@@ -109,6 +109,17 @@ public class TaskAdapter extends RecyclerView.Adapter<cnns.com.example.tp_entrai
         this.notifyItemRangeChanged(position, getItemCount()- position);
     }
 
+    public void supprimeToutVisuellement(){
+        do{
+            for(int i = 0; i < m_data.size(); i++){
+                m_data.remove(i);
+                this.notifyItemRemoved(i);
+                this.notifyItemRangeChanged(i, m_data.size()-1);
+            }
+        }while (m_data.size() != 0);
+        System.out.println("SIZZZE" + m_data.size());
+    }
+
     public void supprimeEnBase(String title) {
         ListeAttenteDbHelper mDbHelper = new ListeAttenteDbHelper(m_context);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
