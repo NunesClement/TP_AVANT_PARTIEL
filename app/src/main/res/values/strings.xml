@@ -2,5 +2,5 @@
     <string name="app_name">TP_liste_cadeau</string>
     <string name="settings">Paramètres</string>
     <string name="libelle">Libellé : </string>
-    <string name="search">RECHERCHER : </string>
+    <string name="search">RECHERCHE</string>
 </resources>
