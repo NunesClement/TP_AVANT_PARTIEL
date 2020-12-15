@@ -4,5 +4,8 @@
     <string name="libelle">Libellé : </string>
     <string name="search">RECHERCHE</string>
     <string name="clef_1">clef_1</string>
+    <string name="clef_2">clef_2</string>
+    <string name="sortLabel">Trier par</string>
+    <string name="sizePolice">Saisir la taille de la police</string>
 
 </resources>

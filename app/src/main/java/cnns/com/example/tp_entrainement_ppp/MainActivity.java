@@ -32,6 +32,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public TextView textNomTask;
+
+
+
     static final int ADD_TASK_ID = 1;
     private Button btnAddTask;
     private EditText searchBarCadeau;
@@ -83,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
                 //System.out.println("A cliqué !!" + searchBarCadeau.getText().toString());
             }
         });
+
+        actualiserPageSelonPref();
     }
 
     @Override
@@ -101,14 +107,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        SharedPreferences app_prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Boolean pref_value = app_prefs.getBoolean(getString(R.string.clef_1), false);
-        System.out.println(pref_value + "CALLLLLL");
+        actualiserPageSelonPref();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
+        actualiserPageSelonPref();
         super.onPause();
         System.out.println("####TEST PAUSE");
     }
@@ -224,5 +229,14 @@ public class MainActivity extends AppCompatActivity {
             taskAdapter.ajoute(titre, priorite);
         }
         cursor.close();
+    }
+    public void actualiserPageSelonPref(){
+        textNomTask = (TextView) findViewById(R.id.textNomTask);
+
+        SharedPreferences app_prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String pref_value_sizePolice = app_prefs.getString(getString(R.string.clef_2), "14");
+        Boolean pref_value_sort = app_prefs.getBoolean(getString(R.string.clef_1), false);
+        int size_demandee = Integer.parseInt(pref_value_sizePolice);
+        textNomTask.setText("test");
     }
 }

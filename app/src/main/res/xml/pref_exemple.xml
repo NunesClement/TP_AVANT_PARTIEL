@@ -3,5 +3,13 @@
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="clef_1"
-        android:title="Ma première préférence"/>
+        android:title="@string/sortLabel"
+        android:summaryOff="Nom"
+        android:summaryOn="Priorite"
+        />
+
+    <EditTextPreference
+        android:defaultValue="14"
+        android:key="clef_2"
+        android:title="@string/sizePolice"/>
 </PreferenceScreen>
